@@ -12,8 +12,19 @@ class MarkdownHighlighterPlugin(Plugin):
     name = 'Markdown Highlighter'
     description = 'Adds syntax highlighting for markdown blocks.'
 
-    def get_formatter(self):
-        return HtmlFormatter(style=self.get_style())
+    def get_formatter(self, formatter_kwargs=None):
+        """
+        :param formatter_kwargs: Any keywords arguments to pass through to 
+            ``pygments.formatters.HtmlFormatter``. Note that ``style`` will 
+            be popped off the dictionary if passed.
+        :type formatter_kwargs: dict
+        """
+        if not formatter_kwargs:
+            # You can't .pop from None, so make sure we have a dict
+            # (but don't set an empty dict to the kwarg's default value)
+            formatter_kwargs = dict()
+        formatter_kwargs.pop('style')
+        return HtmlFormatter(style=self.get_style(), **formatter_kwargs)
 
     def get_style(self):
         return self.get_config().get('pygments.style', 'default')
