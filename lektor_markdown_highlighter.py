@@ -13,12 +13,6 @@ class MarkdownHighlighterPlugin(Plugin):
     description = 'Adds syntax highlighting for markdown blocks.'
 
     def get_formatter(self, lang=None):
-        """
-        :param formatter_kwargs: Any keywords arguments to pass through to 
-            ``pygments.formatters.HtmlFormatter``. Note that ``style`` will 
-            be popped off the dictionary if passed.
-        :type formatter_kwargs: dict
-        """
         if lang:
             css = 'highlight ' + lang
         else:
